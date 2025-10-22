@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Added a meta description for SEO -->
+    <meta name="description" content="Generate and listen to binaural beats at different frequencies (Delta, Theta, Alpha, Beta, Gamma) to aid in sleep, meditation, focus, and concentration.">
+    <title>Binaural Beats - Brain Entrainment</title>
+
+    <!-- NEW: Added Canonical URL, Open Graph, and Twitter tags for SEO and sharing -->
+    <link rel="canonical" href="https://binaural.im">
+    <meta property="og:title" content="Binaural Beats - Brain Entrainment">
+    <meta property="og:description" content="A calm, soothing web app to generate custom binaural beats for focus, sleep, or meditation.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://binaural.im">
+    <!-- Optional: Add an og:image tag here if you have a preview image -->
+    <!-- <meta property="og:image" content="https://binaural.im/preview-image.png"> -->
+    <meta name="twitter:card" content="summary">
+
+    <!-- Added Google Font for a softer, cleaner look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for a calm, soothing theme */
+        :root {
+            --bg-color: #fcfaf5;         /* Warm, soft off-white background */
+            --card-bg: #ffffff;         /* Clean white for the main card */
+            --text-dark: #333333;      /* Dark, readable text */
+            --text-medium: #666666;    /* Softer grey for descriptions */
+            --text-light: #999999;     /* Light grey for less important text */
+            --primary-color: #5a7d7c;  /* Muted, calming sage/teal green */
+            --primary-light: #e8f0ef;  /* A very light tint of the primary color */
+            --secondary-color: #d98c69; /* Warm, soft terracotta for "stop" */
+            --border-color: #e5e5e5;   /* Subtle border color */
+            --shadow-color: rgba(0, 0, 0, 0.08); /* Softer, lighter shadow */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Updated font and colors for a calmer feel */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-dark); /* Changed from light to dark */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            /* Softer card style */
+            background: var(--card-bg);
+            border: none; /* Removed the bright border */
+            border-radius: 16px; /* Slightly softer radius */
+            padding: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color); /* Softer shadow */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            /* Updated to new primary color */
+            color: var(--primary-color);
+            font-size: 2.5em;
+            text-shadow: none; /* Removed the glow */
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-medium); /* Softer subtitle color */
+            margin-bottom: 40px;
+            font-size: 0.95em;
+        }
+
+        .frequencies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .frequency-card {
+            /* Softer card style */
+            background: #fafafa; /* Simple, light background */
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .frequency-card:hover {
+            /* Subtle hover effect */
+            background: #f5f5f5;
+            transform: translateY(-2px); /* Softer lift */
+            box-shadow: 0 4px 10px var(--shadow-color); /* Subtle shadow on hover */
+        }
+
+        .frequency-card.active {
+            /* Clearer active state */
+            background: var(--primary-light);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(90, 125, 124, 0.2); /* Soft primary-color shadow */
+        }
+
+        .frequency-label {
+            font-weight: bold;
+            color: var(--primary-color); /* Updated to primary color */
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .frequency-range {
+            font-size: 0.85em;
+            color: var(--text-medium); /* Updated text color */
+            margin-bottom: 8px;
+        }
+
+        .frequency-description {
+            font-size: 0.8em;
+            color: var(--text-light); /* Updated text color */
+            line-height: 1.3;
+        }
+
+        .controls {
+            /* Simplified controls container */
+            background: #fafafa;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-color); /* Updated to primary color */
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            /* Simplified slider track */
+            background: var(--border-color);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary-color); /* Updated thumb color */
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(90, 125, 124, 0.5); /* Soft shadow for thumb */
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary-color); /* Updated thumb color */
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(90, 125, 124, 0.5); /* Soft shadow for thumb */
+            border: none;
+        }
+
+        .value-display {
+            /* Updated value display style */
+            background: var(--primary-light);
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            padding: 5px 12px;
+            min-width: 60px;
+            text-align: center;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .play-button {
+            /* Calmer play button */
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(90, 125, 124, 0.3);
+        }
+
+        .play-button:hover:not(:disabled) {
+            background: #4a6a69; /* Slightly darker green */
+            box-shadow: 0 6px 20px rgba(90, 125, 124, 0.4);
+            transform: none; /* Removed scale */
+        }
+
+        .play-button:disabled {
+            background: #ccc; /* Lighter disabled state */
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .stop-button {
+            /* Softer stop button */
+            background: var(--secondary-color);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(217, 140, 105, 0.3);
+        }
+
+        .stop-button:hover:not(:disabled) {
+            background: #c97c5a; /* Slightly darker terracotta */
+            box-shadow: 0 6px 20px rgba(217, 140, 105, 0.4);
+            transform: none; /* Removed scale */
+        }
+
+        .stop-button:disabled {
+            background: #ccc; /* Lighter disabled state */
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            /* Updated status box style */
+            background: #fafafa;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status.playing {
+            /* Updated playing status style */
+            background: var(--primary-light);
+            color: var(--primary-color);
+            font-weight: bold;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(90, 125, 124, 0.2);
+        }
+
+        .status.stopped {
+            color: var(--text-medium);
+        }
+
+        .info-box {
+            /* Updated info box style */
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: var(--text-medium);
+        }
+
+        .info-box strong {
+            color: var(--primary-color);
+        }
+
+        .info-box p {
+            margin-top: 10px;
+        }
+        .info-box .headphone-notice {
+            margin-top: 15px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        .info-box .headphone-notice strong {
+             font-size: 1.05em;
+        }
+        .info-box .headphone-notice .icon {
+            font-size: 1.2em;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        .info-box .headphone-notice .reason {
+            font-size: 0.9em;
+            color: var(--text-medium); /* Updated text color */
+            margin-top: 4px;
+            display: inline-block;
+            font-weight: 400; /* Reset from parent */
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.85em;
+            color: var(--text-light); /* Updated text color */
+        }
+
+        .footer a {
+            color: var(--primary-color); /* Updated link color */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #4a6a69; /* Slightly darker */
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .frequencies-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Binaural Beats</h1>
+        <p class="subtitle">Brainwave Entrainment for Calm & Focus</p>
+
+        <div class="frequencies-grid">
+            <div class="frequency-card" onclick="selectFrequency(this, 2, 'delta')">
+                <div class="frequency-label">Delta</div>
+                <div class="frequency-range">0.5–4 Hz</div>
+                <div class="frequency-description">Deep sleep, dreamless rest</div>
+            </div>
+
+            <div class="frequency-card" onclick="selectFrequency(this, 6, 'theta')">
+                <div class="frequency-label">Theta</div>
+                <div class="frequency-range">4–8 Hz</div>
+                <div class="frequency-description">Meditation, creativity</div>
+            </div>
+
+            <div class="frequency-card" onclick="selectFrequency(this, 10, 'alpha')">
+                <div class="frequency-label">Alpha</div>
+                <div class="frequency-range">8–12 Hz</div>
+                <div class="frequency-description">Relaxation, focus</div>
+            </div>
+
+            <div class="frequency-card" onclick="selectFrequency(this, 20, 'beta')">
+                <div class="frequency-label">Beta</div>
+                <div class="frequency-range">12–30 Hz</div>
+                <div class="frequency-description">Alertness, concentration</div>
+            </div>
+
+            <!-- MODIFICATION: Changed onclick to 40 Hz and updated description -->
+            <div class="frequency-card" onclick="selectFrequency(this, 40, 'gamma')">
+                <div class="frequency-label">Gamma</div>
+                <div class="frequency-range">30–100 Hz</div>
+                <div class="frequency-description">Peak cognition (40 Hz)</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <!-- NEW: Added slider for beat frequency -->
+            <div class="control-group">
+                <label class="control-label">Binaural Beat Frequency (Hz)</label>
+                <div class="slider-container">
+                    <input type="range" id="beatFreq" min="1" max="100" value="10" step="0.5" oninput="updateBeatFreq()">
+                    <div class="value-display" id="beatDisplay">10.0 Hz</div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Carrier Frequency (Hz)</label>
+                <div class="slider-container">
+                    <input type="range" id="carrierFreq" min="100" max="400" value="200" oninput="updateCarrier()">
+                    <div class="value-display" id="carrierDisplay">200 Hz</div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Volume</label>
+                <div class="slider-container">
+                    <input type="range" id="volume" min="0" max="100" value="30" oninput="updateVolume()">
+                    <div class="value-display" id="volumeDisplay">30%</div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Duration (minutes)</label>
+                <div class="slider-container">
+                    <input type="range" id="duration" min="1" max="60" value="15" oninput="updateDuration()">
+                    <div class="value-display" id="durationDisplay">15 min</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="play-button" id="playBtn" onclick="playBinauralBeats()">▶ Play</button>
+            <button class="stop-button" id="stopBtn" onclick="stopBinauralBeats()" disabled>⏹ Stop</button>
+        </div>
+
+        <div class="status" id="status">Ready</div>
+
+        <div class="info-box">
+            <strong>What are Binaural Beats?</strong>
+            <p>Binaural beats are an auditory illusion created by playing two slightly different frequencies in each ear. For example, 200 Hz in the left ear and 210 Hz in the right. Your brain perceives the <em>difference</em> between these two tones as a third, pulsing beat (in this example, 10 Hz).</p>
+            <p>This process, known as 'brainwave entrainment', is thought to gently guide your brain activity to match the beat's frequency, potentially helping to encourage specific states like relaxation, focus, or deep sleep.</p>
+            <p class="headphone-notice">
+                <span class="icon">🎧</span>
+                <strong>You must use headphones for this effect.</strong><br>
+                <span class="reason">The illusion is created in your brain by isolating the two frequencies. Using speakers will mix the tones in the air, which cancels the effect.</span>
+            </p>
+        </div>
+
+        <div class="footer">
+            digital monument by <a href="https://unearth.im" target="_blank" rel="noopener noreferrer">unearth.im</a>
+        </div>
+    </div>
+
+    <script>
+        let audioContext = null;
+        let oscillator1 = null;
+        let oscillator2 = null;
+        let gainNode = null;
+        let isPlaying = false;
+        let timeoutId = null;
+        let selectedBeatFreq = 10; // Default to 10 Hz (Alpha)
+
+        const statusEl = document.getElementById('status');
+        const playBtn = document.getElementById('playBtn');
+        const stopBtn = document.getElementById('stopBtn');
+
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function selectFrequency(element, freq, name) {
+            document.querySelectorAll('.frequency-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            element.classList.add('active');
+            selectedBeatFreq = freq;
+            updateStatus(`Selected: ${name.toUpperCase()} (${freq} Hz)`);
+
+            // Update the slider to match the preset
+            const beatSlider = document.getElementById('beatFreq');
+            const beatDisplay = document.getElementById('beatDisplay');
+            beatSlider.value = freq;
+            beatDisplay.textContent = freq.toFixed(1) + ' Hz';
+        }
+
+        function updateCarrier() {
+            const value = document.getElementById('carrierFreq').value;
+            document.getElementById('carrierDisplay').textContent = value + ' Hz';
+        }
+
+        function updateVolume() {
+            const value = document.getElementById('volume').value;
+            document.getElementById('volumeDisplay').textContent = value + '%';
+            if (gainNode) {
+                // Volume is non-linear, so we square it for a more natural feel
+                // And we keep the max volume low to protect hearing
+                const scaledVolume = (value / 100) * 0.5; // Max 50% of the gain node's max
+                gainNode.gain.setValueAtTime(scaledVolume * scaledVolume, audioContext.currentTime);
+            }
+        }
+
+        function updateDuration() {
+            const value = document.getElementById('duration').value;
+            document.getElementById('durationDisplay').textContent = value + ' min';
+        }
+
+        // NEW: Function to update beat frequency from the new slider
+        function updateBeatFreq() {
+            const value = parseFloat(document.getElementById('beatFreq').value);
+            document.getElementById('beatDisplay').textContent = value.toFixed(1) + ' Hz';
+            selectedBeatFreq = value;
+
+            // Deselect all preset cards when slider is moved manually
+            document.querySelectorAll('.frequency-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // If playing, update the frequency live
+            if (isPlaying) {
+                const carrierFreq = parseFloat(document.getElementById('carrierFreq').value);
+                oscillator1.frequency.setValueAtTime(carrierFreq, audioContext.currentTime);
+                oscillator2.frequency.setValueAtTime(carrierFreq + selectedBeatFreq, audioContext.currentTime);
+                updateStatus(`Playing binaural beats at ${selectedBeatFreq.toFixed(1)  } Hz...`);
+            }
+        }
+
+        function updateStatus(message) {
+            statusEl.textContent = message;
+        }
+
+        function playBinauralBeats() {
+            initAudioContext();
+            
+            // Resume context if it was suspended (e.g., by browser autoplay policy)
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
+            if (isPlaying) return;
+
+            const carrierFreq = parseFloat(document.getElementById('carrierFreq').value);
+            const volumePercent = parseFloat(document.getElementById('volume').value);
+            const durationMinutes = parseFloat(document.getElementById('duration').value);
+
+            // Create oscillators for each ear
+            oscillator1 = audioContext.createOscillator();
+            oscillator2 = audioContext.createOscillator();
+            gainNode = audioContext.createGain();
+
+            // Set frequencies: left ear gets carrier, right ear gets carrier + beat frequency
+            oscillator1.frequency.value = carrierFreq;
+            oscillator2.frequency.value = carrierFreq + selectedBeatFreq;
+
+            // Set wave type
+            oscillator1.type = 'sine';
+            oscillator2.type = 'sine';
+
+            // Set volume with max safety limit
+            const scaledVolume = (volumePercent / 100) * 0.5;
+            gainNode.gain.setValueAtTime(scaledVolume * scaledVolume, audioContext.currentTime);
+
+            // Create stereo effect - one oscillator per channel
+            const splitter = audioContext.createChannelSplitter(2);
+            const merger = audioContext.createChannelMerger(2);
+
+            // Connect oscillator1 to left channel (0)
+            oscillator1.connect(splitter);
+            splitter.connect(merger, 0, 0); // Connect output 0 of splitter to input 0 of merger
+
+            // Connect oscillator2 to right channel (1)
+            oscillator2.connect(splitter);
+            splitter.connect(merger, 0, 1); // Connect output 0 of splitter to input 1 of merger (This is the correct way to split)
+            // The splitter only has one input, but we connect two things to it. It seems to work by splitting the *last* connection.
+            // A safer way is to connect each oscillator to a separate channel.
+            
+            // --- A more robust stereo separation ---
+            // Disconnect the previous connections to splitter
+            oscillator1.disconnect();
+            oscillator2.disconnect();
+
+            // Connect oscillator 1 to left channel (index 0)
+            oscillator1.connect(merger, 0, 0);
+            
+            // Connect oscillator 2 to right channel (index 1)
+            oscillator2.connect(merger, 0, 1);
+            // --- End of robust separation ---
+
+            merger.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator1.start();
+            oscillator2.start();
+
+            isPlaying = true;
+            playBtn.disabled = true;
+            stopBtn.disabled = false;
+
+            updateStatus(`🎶 Playing binaural beats at ${selectedBeatFreq.toFixed(1)} Hz...`);
+            statusEl.classList.add('playing');
+            statusEl.classList.remove('stopped');
+
+            // Auto-stop after duration
+            const durationMs = durationMinutes * 60 * 1000;
+            timeoutId = setTimeout(() => {
+                stopBinauralBeats();
+            }, durationMs);
+        }
+
+        function stopBinauralBeats() {
+            if (!isPlaying) return;
+
+            if (oscillator1) oscillator1.stop();
+            if (oscillator2) oscillator2.stop();
+            if (gainNode) gainNode.disconnect();
+            
+            // Nullify to ensure they are recreated next time
+            oscillator1 = null;
+            oscillator2 = null;
+            gainNode = null;
+
+            if (timeoutId) clearTimeout(timeoutId);
+            timeoutId = null;
+
+            isPlaying = false;
+            playBtn.disabled = false;
+            stopBtn.disabled = true;
+
+            updateStatus('Ready');
+            statusEl.classList.remove('playing');
+            statusEl.classList.add('stopped');
+        }
+
+        // Add an initial call to set default values on load
+        window.onload = () => {
+            updateBeatFreq();
+            updateCarrier();
+            updateVolume();
+            updateDuration();
+            
+            // Set a default active card
+            const defaultCard = document.querySelector('.frequency-card[onclick*="10, \'alpha\'"]');
+            if(defaultCard) {
+                defaultCard.classList.add('active');
+            }
+        };
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (isPlaying) stopBinauralBeats();
+        });
+    </script>
+</body>
+</html>
+
+
