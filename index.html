@@ -2,9 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
 
-    <!-- === 1. Primary Meta Tags === -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      // --- THE ARTWORK (Variable Content) ---
+      "@type": "VisualArtwork", 
+      "@id": "https://binaural.im/#artwork",
+      "url": "https://binaural.im",
+      "name": "Binaural Beats",
+      "headline": "Brainwave Entrainment for Calm & Focus",
+      "description": "Generate and listen to binaural beats at different frequencies (Delta, Theta, Alpha, Beta, Gamma) to aid in sleep, meditation, focus, and concentration.",
+      "image": "https://binaural.im/og-image.png",
+      "artMedium": "Generative JavaScript (Web Audio API)",
+      "artForm": "Digital Monument",
+      "genre": "Interactive Art",
+      "copyrightYear": "2025",
+      "inLanguage": "en-US",
+
+      // --- THE CHAIN OF CUSTODY (Immutable Infrastructure) ---
+      "author": [
+        { "@id": "https://josiest.com/#person" },
+        { "@id": "https://felixvelas.co/#person" }
+      ],
+      "creator": [
+        { "@id": "https://josiest.com/#person" },
+        { "@id": "https://felixvelas.co/#person" }
+      ],
+      "publisher": { "@id": "https://unearth.im/#organization" },
+      "isPartOf": { "@id": "https://unearth.im/#collection" },
+      "mainEntityOfPage": { "@id": "https://binaural.im/#website" }
+    },
+
+    {
+      // --- THE WEBSITE CONTAINER ---
+      "@type": "WebSite",
+      "@id": "https://binaural.im/#website",
+      "url": "https://binaural.im",
+      "name": "Binaural Beats",
+      "publisher": { "@id": "https://unearth.im/#organization" }
+    },
+
+    // --- THE SOVEREIGN ENTITIES (Immutable Core) ---
+    {
+      "@type": "Organization",
+      "@id": "https://unearth.im/#organization",
+      "name": "unearth.im",
+      "url": "https://unearth.im",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://unearth.im/favicon-32x32.png"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://josiest.com/#person",
+      "name": "Josie Jefferson",
+      "url": "https://josiest.com",
+      "jobTitle": "Digital Archaeologist",
+      "sameAs": [
+        "https://notjojo.im",
+        "https://notjojo.org"
+      ], 
+      "affiliation": { "@id": "https://unearth.im/#organization" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://felixvelas.co/#person",
+      "name": "Felix Velasco",
+      "url": "https://felixvelas.co",
+      "jobTitle": "Trust Architect",
+      "affiliation": { "@id": "https://unearth.im/#organization" }
+    }
+  ]
+}
+    </script>
     <title>Binaural Beats | binaural.im</title>
     <meta name="title" content="Binaural Beats | binaural.im">
     <meta name="description" content="Generate and listen to binaural beats at different frequencies (Delta, Theta, Alpha, Beta, Gamma) to aid in sleep, meditation, focus, and concentration.">
@@ -16,10 +91,8 @@
     
     <link rel="canonical" href="https://binaural.im" />
     
-    <!-- === 2. Webmention Endpoint === -->
     <link rel="webmention" href="https://webmention.io/unearth.im/webmention" />
 
-    <!-- === 3. Open Graph / Facebook === -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://binaural.im">
     <meta property="og:title" content="Binaural Beats | binaural.im">
@@ -27,25 +100,14 @@
     <meta property="og:image" content="https://binaural.im/og-image.png">
     <meta property="og:site_name" content="binaural.im">
 
-    <!-- === 4. Twitter Card === -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://binaural.im">
     <meta property="twitter:title" content="Binaural Beats | binaural.im">
     <meta property="twitter:description" content="Generate and listen to binaural beats at different frequencies (Delta, Theta, Alpha, Beta, Gamma) to aid in sleep, meditation, focus, and concentration.">
     <meta property="twitter:image" content="https://binaural.im/og-image.png">
 
-    <!-- === 5. Favicons === -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <!-- Note: You may want to generate and add these other favicon formats for broader compatibility -->
-    <!-- <link rel="alternate icon" href="/favicon.ico"> -->
-    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
-
-    <!-- Brand Color Meta Tags -->
-    <meta name="theme-color" content="#fcfaf5"> <!-- Matches --bg-color -->
-    <meta name="msapplication-TileColor" content="#5a7d7c"> <!-- Matches --primary-color -->
-
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="theme-color" content="#fcfaf5"> <meta name="msapplication-TileColor" content="#5a7d7c"> <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
